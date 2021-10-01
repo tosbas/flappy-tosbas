@@ -1,0 +1,54 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 100vh;
+    background-color: rgb(0, 0, 0);
+    color: white;
+}
+
+canvas {
+    border: 5px solid rgb(255, 0, 0);
+}
+
+.cacheText {
+    visibility: hidden;
+}
+
+#bouton_start {
+    margin-top: 10px;
+    padding: 5px;
+    background-color: orange;
+    border: 2px solid black;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#messageBox {
+    position: absolute;
+    border: 5px solid black;
+    font-size: 24px;
+    padding: 5px;
+    background-color: white;
+    height: auto;
+    width: 250px;
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    color: black;
+}
