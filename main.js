@@ -76,7 +76,7 @@ function animerPillier() {
     ctx.drawImage(image, 110, 20, 300, 800, pillier_x, pillier_y, 300, 500);
 
     if (start == true) {
-        pillier_x--;
+        pillier_x -= 2.5;
     }
 
     if (pillier_x < -180) {
