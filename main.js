@@ -1,8 +1,13 @@
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
 
-canvas.width = 600;
-canvas.height = 600;
+canvas.width = 350;
+canvas.height = 580;
+
+if (window.innerWidth > 600) {
+    canvas.width = 600;
+    canvas.height = 600;
+}
 
 let messageBox = document.querySelector("#messageBox");
 let bouton_start = document.querySelector("#bouton_start");
@@ -39,7 +44,7 @@ function animerFlappy() {
 
     ctx.drawImage(image, 430, frameFlappy, 150, 150, flappy_x, flappy_y, 60, 60);
 
-    // si le bouton est activer, alors flappy bird tombe et les pillier défilent
+    // si le bouton est activer, alors flappy bird tombe
     if (start == true) {
         flappy_y += 1.2;
     }
