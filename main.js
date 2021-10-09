@@ -49,7 +49,7 @@ function animerFlappy() {
         flappy_y += 1.2;
     }
 
-    if (flappy_y > canvas.height || flappy_x + 30 >= pillier_x && flappy_y + 30 > pillier_y && flappy_x <= pillier_x + 150) {
+    if (flappy_y > canvas.height || flappy_y < 0 || flappy_x + 30 >= pillier_x && flappy_y - 30 <= pillier_y + 500 && flappy_x + 30 < pillier_x + 150 || flappy_x + 30 >= pillier_x && flappy_y + 30 >= pillier_y && flappy_x < pillier_x + 150) {
         start = false;
         flappy_y = 100;
         messageBox.classList.remove("cacheText");
@@ -66,7 +66,7 @@ function animerFlappy() {
 }
 
 let pillier_x = canvas.width;
-let pillier_y = randomNombre(50, 200);
+let pillier_y = -300;
 
 function randomNombre(min, max) {
     return Math.floor(Math.random() * (max - min) + min);
@@ -81,7 +81,7 @@ function animerPillier() {
 
     if (pillier_x < -180) {
         pillier_x = canvas.width;
-        pillier_y = randomNombre(50, 400);
+        pillier_y = randomNombre(-300, 500);
 
 
     }
