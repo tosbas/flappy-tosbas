@@ -9,135 +9,197 @@ if (window.innerWidth > 600) {
     canvas.height = 600;
 }
 
-let messageBox = document.querySelector("#messageBox");
-let bouton_start = document.querySelector("#bouton_start");
+const messageBox = document.querySelector("#messageBox");
+const bouton_start = document.querySelector("#bouton_start");
 
-let image = new Image();
+let score = document.querySelector("#score");
+let best_score = document.querySelector("#best_score");
 
+
+
+let scoreParse = parseInt("0");
+best_score.innerText = scoreParse;
+
+localStorage.setItem("BestScore", "0");
+best_score.innerText = localStorage.getItem("BestScore", scoreParse);
+
+score.innerText = 0;
+
+const image = new Image();
 image.src = "flappy.png";
 
 let start = false;
 
-let frameFlappy = 250;
+bouton_start.addEventListener("click", () => {
+    messageBox.classList.add("cacheText");
+    start = true;
+    pillier_x = canvas.width;
 
-let score = 0;
+})
 
-function boutonAction() {
+// **********************************************Globale**************************************************
 
-    // evenement sur le bouton
-    bouton_start.addEventListener("click", () => {
-        messageBox.classList.add("cacheText");
-        start = true;
-        flappyEvent();
-
-    })
-
-}
-
-boutonAction();
-
-let flappy_x = canvas.width / 2 - 30; //flappy axe x
-let flappy_y = 10; //flappy axe y
-
-
-function animerFlappy() {
-
-    ctx.drawImage(image, 430, frameFlappy, 150, 150, flappy_x, flappy_y, 60, 60);
-
-    // si le bouton est activer, alors flappy bird tombe
-    if (start == true) {
-        flappy_y += 1.2;
-    }
-
-    if (flappy_y > canvas.height || flappy_y < 0 || flappy_x + 30 >= pillier_x && flappy_y - 30 <= pillier_y + 500 && flappy_x + 30 < pillier_x + 150 || flappy_x + 30 >= pillier_x && flappy_y + 30 >= pillier_y && flappy_x < pillier_x + 150) {
-        start = false;
-        flappy_y = 100;
-        messageBox.classList.remove("cacheText");
-        messageBox.innerText = "Game Over !";
-        messageBox.appendChild(bouton_start)
-        bouton_start.innerText = "Rejouer ?";
-        pillier_x = canvas.width;
-
-
-        bouton_start.addEventListener("click", () => {
-            start = true;
-        })
-    }
-}
-
-let pillier_x = canvas.width;
-let pillier_y = -300;
-
-function randomNombre(min, max) {
-    return Math.floor(Math.random() * (max - min) + min);
-}
-
-function animerPillier() {
-    ctx.drawImage(image, 110, 20, 300, 800, pillier_x, pillier_y, 300, 500);
-
-    if (start == true) {
-        pillier_x -= 2.5;
-    }
-
-    if (pillier_x < -180) {
-        pillier_x = canvas.width;
-        pillier_y = randomNombre(-300, 500);
-
-
-    }
-}
-
-// function globale qui affiche le background, pillier,sol et flappy bird
+// dessine dés de le départ le background et le sol
 
 function drawImage() {
-
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    requestAnimationFrame(drawImage);
-
-    // (image, source x, source y, source Largeur, source Hauteur, destination x, destination y, destination Largeur, destination Hauteur);
+    requestAnimationFrame(drawImage)
 
     // background
-    ctx.drawImage(image, 750, 20, canvas.width, canvas.height, 0, 0, canvas.width, canvas.height);
-
-    // pillier
-    animerPillier();
+    ctx.drawImage(image, 750, 300, canvas.width, canvas.height, 0, 0, canvas.width, canvas.height);
 
     // sol
-    ctx.drawImage(image, 100, 960, canvas.width, 30, 0, canvas.height - 50, canvas.width, 100);
+    ctx.drawImage(image, 0, 950, canvas.width, 50, 0, 550, canvas.width, 50);
 
-    // flappy-bird
-    animerFlappy();
 }
 
-drawImage();
+drawImage()
 
+// **************************************************Pillier**************************************************
 
-function flappyEvent() {
+function returnRandomNumber(min, max) {
+    return Math.random() * (max - min) + min;
+}
 
-    // sprite pour l'animation
+let pillier_y = returnRandomNumber(150, 500);
+let pillier_x = canvas.width;
 
+let pillier_bas = true;
+let pillier_haut = false;
+
+let speedInc = 1;
+
+function drawPillier() {
+    requestAnimationFrame(drawPillier)
     if (start == true) {
-        setInterval(() => {
-            if (frameFlappy == 250) {
-                frameFlappy = 410;
-            } else if (frameFlappy == 410) {
-                frameFlappy = 250;
+
+        pillier_x -= speedInc;
+
+        ctx.drawImage(image, 110, 30, 200, 600, pillier_x, pillier_y, 200, 600);
+
+        // je doit remettre le sol sinon le pillier passe devant
+        ctx.drawImage(image, 0, 950, canvas.width, 50, 0, 550, canvas.width, 50);
+
+
+        if (pillier_x < -200) {
+            score.innerText++;
+            if (score.innerText > scoreParse) {
+                scoreParse += 1;
+                localStorage.setItem("BestScore", scoreParse);
+
+                best_score.innerText = localStorage.getItem("BestScore", scoreParse);
             }
-        }, 100);
+
+            pillier_x = canvas.width;
+
+            if (pillier_y > 0) {
+                pillier_y = returnRandomNumber(-100, -400);
+                pillier_haut = true;
+                pillier_bas = false;
+
+            } else if (pillier_y < 0) {
+                pillier_y = returnRandomNumber(100, 500);
+                pillier_bas = true;
+                pillier_haut = false;
+
+            }
+        }
+    }
+}
+
+drawPillier();
+
+// **************************************************Flappy**************************************************
+
+// frame de flappy
+
+let frame = 265;
+
+// function qui me permet de changer la frame tous les 150ms
+
+function frameFlappy() {
+
+    setInterval(() => {
+        if (start == true) {
+
+            if (frame == 265) {
+                frame = 590
+            } else if (frame == 590) {
+                frame = 265;
+            }
+        }
+
+    }, 150)
+
+}
+
+let flappy_x = 150;
+let flappy_y = 100;
+
+// function pour gérer les collisions
+function collisionFlappy() {
+    if (flappy_y > canvas.height || flappy_y < -30 || flappy_x + 50 > pillier_x && flappy_y + 30 > pillier_y && flappy_x + 40 < pillier_x + 200 && pillier_bas == true || flappy_x + 50 > pillier_x && flappy_y > pillier_y && flappy_y < pillier_y + 600 && flappy_x + 40 < pillier_x + 250 && pillier_haut == true) {
+
+        start = false;
+        GameOver();
+
+
     }
 
 }
 
-// event pour chaque click, cela fait remonter flappy grace à la variable flappy_push
 
-let flappy_push = -50; //force de pousse
+//function en attente, dés que start est égale à true alors flappy tombe est la frame de flappy change
+function moveFlappy() {
+    requestAnimationFrame(moveFlappy)
+    if (start == true) {
+        flappy_y += 1.2;
+        setInterval(flappy_y += 0.2)
+        frameFlappy();
 
-canvas.addEventListener("click", () => {
+    }
+}
+
+moveFlappy();
+
+// function qui s'appelle elle-même, affichage de flappy
+
+function drawFlappy() {
+    requestAnimationFrame(drawFlappy)
+        // sx,sy,sw,sh,dx,dy,dw,dh
+    ctx.drawImage(image, 434, frame, 150, 150, flappy_x, flappy_y, 52, 60);
 
     if (start == true) {
-        flappy_y += flappy_push;
+        collisionFlappy();
+    }
 
+}
+
+
+drawFlappy()
+
+
+// event sur l'appuie souris pour remonter flappy
+canvas.addEventListener("click", () => {
+    if (start == true) {
+        flappy_y -= 50;
     }
 
 })
+
+// *********************************************Game Over*******************************
+
+function GameOver() {
+    score.innerText = 0;
+    flappy_x = 150;
+    flappy_y = 100;
+    speedInc = 1;
+    pillier_y = returnRandomNumber(100, 500);
+    messageBox.classList.remove("cacheText");
+    messageBox.innerHTML = "Game Over<br>Rejouer ?";
+    messageBox.appendChild(bouton_start);
+}
+
+setInterval(() => {
+    speedInc += 0.1
+
+}, 1000)
