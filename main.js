@@ -137,7 +137,7 @@ let flappy_y = 100;
 
 // function pour gérer les collisions
 function collisionFlappy() {
-    if (flappy_y > canvas.height || flappy_y < -30 || flappy_x + 50 > pillier_x && flappy_y + 30 > pillier_y && flappy_x + 40 < pillier_x + 200 && pillier_bas == true || flappy_x + 50 > pillier_x && flappy_y > pillier_y && flappy_y < pillier_y + 600 && flappy_x + 40 < pillier_x + 250 && pillier_haut == true) {
+    if (flappy_y > canvas.height || flappy_y < -30 || flappy_x + 50 > pillier_x && flappy_y + 30 > pillier_y && flappy_x + 40 < pillier_x + 230 && pillier_bas == true || flappy_x + 50 > pillier_x && flappy_y > pillier_y && flappy_y < pillier_y + 600 && flappy_x + 50 < pillier_x + 230 && pillier_haut == true) {
 
         start = false;
         GameOver();
