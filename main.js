@@ -58,7 +58,7 @@ class pipes {
         this.y = y;
         this.width = width;
         this.height = height;
-        this.pushLeft = 0.7;
+        this.pushLeft = 2;
     }
     draw() {
         ctx.drawImage(image, 120, 50, 165, 860, this.x, this.y, this.width, this.height);
@@ -76,8 +76,8 @@ function minMaxNumber(min, max) {
     return value;
 }
 
-const pipe = new pipes(canvas.width + 300, minMaxNumber(210, 380), 100, 300);
-const pipe2 = new pipes(canvas.width + 300, minMaxNumber(-280, -200), 100, 300);
+const pipe = new pipes(canvas.width + 300, minMaxNumber(180, 260), 100, 300);
+const pipe2 = new pipes(canvas.width + 300, minMaxNumber(-260, -180), 100, 300);
 
 /****************************************************************************** function */
 
@@ -104,10 +104,12 @@ function drawStatiqueImage() {
             best_score++;
         }
 
+
         pipe.x = canvas.width;
-        pipe.y = minMaxNumber(210, 380);
-        pipe2.y = minMaxNumber(-280, -200);
         pipe2.x = canvas.width;
+
+        pipe.y = minMaxNumber(165, 260);
+        pipe2.y = minMaxNumber(-260, -165);
 
     }
 }
