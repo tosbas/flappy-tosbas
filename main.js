@@ -24,16 +24,17 @@ let best_score = 0;
 /******************************************************************************* flappy */
 
 class bird {
-    constructor(x, y, width, height, pushDown, pushUp) {
+    constructor(x, y, width, height, pushDown, pushUp, frame) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
         this.pushDown = 1.3;
-        this.pushUp = 50;
+        this.pushUp = 40;
+        this.frame = 265;
     }
     draw() {
-        ctx.drawImage(image, 430, 265, 150, 100, this.x, this.y, this.width, this.height);
+        ctx.drawImage(image, 430, this.frame, 150, 100, this.x, this.y, this.width, this.height);
     }
     method() {
         this.y += this.pushDown;
@@ -75,8 +76,8 @@ function minMaxNumber(min, max) {
     return value;
 }
 
-const pipe = new pipes(canvas.width + 300, minMaxNumber(150, 350), 100, 300);
-const pipe2 = new pipes(canvas.width + 300, minMaxNumber(-280, -150), 100, 300);
+const pipe = new pipes(canvas.width + 300, minMaxNumber(210, 380), 100, 300);
+const pipe2 = new pipes(canvas.width + 300, minMaxNumber(-280, -200), 100, 300);
 
 /****************************************************************************** function */
 
@@ -104,8 +105,8 @@ function drawStatiqueImage() {
         }
 
         pipe.x = canvas.width;
-        pipe.y = minMaxNumber(150, 350);
-        pipe2.y = minMaxNumber(-280, -150);
+        pipe.y = minMaxNumber(210, 380);
+        pipe2.y = minMaxNumber(-280, -200);
         pipe2.x = canvas.width;
 
     }
@@ -118,6 +119,7 @@ function colision() {
         flappyBird.method();
         pipe.method();
         pipe2.method();
+
     } else {
         messageBox.classList.remove("cacheText");
         messageBox.textContent = "Game Over !";
@@ -147,8 +149,17 @@ canvas.addEventListener("click", () => {
             let audio = document.createElement("audio");
             document.querySelector("figure").appendChild(audio);
             audio.innerHTML = "<audio controls autoplay src = 'sound.mp3'>"
-            flappyBird.y -= 45;
+            flappyBird.y -= flappyBird.pushUp;
+            setInterval(() => {
+                if (flappyBird.frame == 265) {
+                    flappyBird.frame = 425;
+                } else if (flappyBird.frame == 425) {
+                    flappyBird.frame = 265;
+                }
+
+            }, 500)
         }
+
     }
 
 })
