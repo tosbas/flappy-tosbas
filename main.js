@@ -20,6 +20,7 @@ image.src = "flappy.png";
 let start;
 let score = 0;
 let best_score = 0;
+let pushLeft = 2;
 
 /******************************************************************************* flappy */
 
@@ -29,7 +30,7 @@ class bird {
         this.y = y;
         this.width = width;
         this.height = height;
-        this.pushDown = 1.3;
+        this.pushDown = 1.5;
         this.pushUp = 40;
         this.frame = 265;
     }
@@ -41,7 +42,7 @@ class bird {
 
         if (this.y > canvas.height - 20 - this.height ||
             this.x + this.width >= pipe.x && this.y + this.height >= pipe.y && this.x <= pipe.x + pipe.width ||
-            this.x + this.width > pipe2.x && this.y > pipe2.y && this.y < pipe2.y + pipe2.height && this.y < pipe2.width && this.x < pipe2.x + pipe2.width) {
+            this.x + this.width >= pipe2.x && this.y > pipe2.y && this.y < pipe2.y + pipe2.height && this.x <= pipe2.x + pipe2.width) {
             start = false;
             score = 0;
         }
@@ -53,20 +54,20 @@ const flappyBird = new bird(canvas.width / 2 - 12.5, canvas.height / 2 - 12.5, 2
 
 /********************************************************************************* pipes */
 class pipes {
-    constructor(x, y, width, height, pushLeft) {
+    constructor(x, y, width, height) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
-        this.pushLeft = 2;
     }
     draw() {
-        ctx.drawImage(image, 120, 50, 165, 860, this.x, this.y, this.width, this.height);
+    
+        ctx.drawImage(image, 120, 40, 165, 860, this.x, this.y, this.width, this.height);
         //sol
         ctx.drawImage(image, 0, 950, canvas.width, 50, 0, canvas.height - 20, canvas.width, 20);
     }
     method() {
-        this.x -= this.pushLeft;
+        this.x -= pushLeft;
     }
 }
 
@@ -76,8 +77,8 @@ function minMaxNumber(min, max) {
     return value;
 }
 
-const pipe = new pipes(canvas.width + 300, minMaxNumber(180, 260), 100, 300);
-const pipe2 = new pipes(canvas.width + 300, minMaxNumber(-260, -180), 100, 300);
+const pipe = new pipes(canvas.width + 300, minMaxNumber(180, 360), 100, 300);
+const pipe2 = new pipes(canvas.width + 300, pipe.y - 400, 100, 300);
 
 /****************************************************************************** function */
 
@@ -108,8 +109,8 @@ function drawStatiqueImage() {
         pipe.x = canvas.width;
         pipe2.x = canvas.width;
 
-        pipe.y = minMaxNumber(165, 260);
-        pipe2.y = minMaxNumber(-260, -165);
+        pipe.y = minMaxNumber(180, 360);
+        pipe2.y = pipe.y - 400;
 
     }
 }
@@ -121,6 +122,7 @@ function colision() {
         flappyBird.method();
         pipe.method();
         pipe2.method();
+        
 
     } else {
         messageBox.classList.remove("cacheText");
@@ -139,8 +141,13 @@ bouton_start.addEventListener("click", () => {
     pipe.x = canvas.width + 300;
     pipe2.x = canvas.width + 300;
     start = true;
+    pushLeft = 2;
+    setInterval(()=>{
+        pushLeft += 0.1;
+    },20000)
     colision();
     messageBox.classList.toggle("cacheText");
+    
 })
 
 canvas.addEventListener("click", () => {
@@ -159,7 +166,9 @@ canvas.addEventListener("click", () => {
                     flappyBird.frame = 265;
                 }
 
-            }, 500)
+            }, 500);
+
+            
         }
 
     }
