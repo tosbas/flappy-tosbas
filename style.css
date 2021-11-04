@@ -64,3 +64,54 @@ figure {
     font-weight: bold;
     color: black;
 }
+
+#container{
+    border:3px solid black;
+    width:100px;
+    height:30px;
+    border-radius:30px;
+    background: rgb(168,168,168);
+    background: radial-gradient(circle, rgba(168,168,168,1) 17%,       rgba(93,93,93,1) 85%); 
+    padding:10px;
+    margin: auto;
+  }
+  
+  #contour{
+    background-color:black;
+    width: 100px;
+    height: 30px;
+    border-radius: 20px;
+  }
+  
+  #circle{
+    background: red;
+    width:30px;
+    height:30px;
+    border-radius:20px;
+    display: flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+  }
+
+  @keyframes anime{
+    from{
+      background-color: red;
+    }
+    to{
+      transform: translate(70px);
+      background-color: yellowgreen;
+    }
+  }
+  
+  
+  @keyframes anime2{
+    from{
+      transform: translate(70px);
+      background-color: yellowgreen;
+    }
+    to{
+      transform: translate(0px);
+      background-color: red;
+    }
+  }

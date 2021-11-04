@@ -21,6 +21,7 @@ let start;
 let score = 0;
 let best_score = 0;
 let pushLeft = 2;
+let sound = false;
 
 /******************************************************************************* flappy */
 
@@ -157,7 +158,10 @@ canvas.addEventListener("click", () => {
         } else {
             let audio = document.createElement("audio");
             document.querySelector("figure").appendChild(audio);
-            audio.innerHTML = "<audio controls autoplay src = 'sound.mp3'>"
+            if(sound == true){
+                audio.innerHTML = "<audio controls autoplay src = 'sound.mp3'>";
+            }
+            
             flappyBird.y -= flappyBird.pushUp;
             setInterval(() => {
                 if (flappyBird.frame == 265) {
@@ -173,4 +177,28 @@ canvas.addEventListener("click", () => {
 
     }
 
+})
+
+/****************************************************** bouton sound */
+
+const container = document.getElementById("container");
+const circle = document.getElementById("circle");
+
+let i = 0;
+
+container.addEventListener("click", ()=>{
+      i++;
+      
+      if(i == 1){
+        circle.style.animation ="anime 1s forwards";
+        circle.innerText = "on";
+        sound = true;
+      }else if(i == 2){
+        circle.style.animation ="anime2 1s forwards";
+        circle.innerText = "off";
+        i = 0;
+        sound = false;
+      }
+      
+      
 })
