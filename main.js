@@ -3,7 +3,6 @@ const ctx = canvas.getContext("2d");
 const messageBox = document.getElementById("messageBox");
 const bouton_start = document.getElementById("bouton_start");
 
-canvas.width = 300;
 canvas.height = 450;
 
 if (window.innerWidth > 600) {
@@ -20,7 +19,7 @@ image.src = "flappy.png";
 let start;
 let score = 0;
 let best_score = 0;
-let pushLeft = 2;
+let pushLeft = 1.2;
 let sound = false;
 
 /******************************************************************************* flappy */
@@ -31,8 +30,8 @@ class bird {
         this.y = y;
         this.width = width;
         this.height = height;
-        this.pushDown = 1.5;
-        this.pushUp = 40;
+        this.pushDown = 1.3;
+        this.pushUp = 45;
         this.frame = 265;
     }
     draw() {
@@ -62,8 +61,8 @@ class pipes {
         this.height = height;
     }
     draw() {
-    
-        ctx.drawImage(image, 120, 40, 165, 860, this.x, this.y, this.width, this.height);
+        //pipe
+        ctx.drawImage(image, 114, 40, 180, 880, this.x, this.y, this.width, this.height);
         //sol
         ctx.drawImage(image, 0, 950, canvas.width, 50, 0, canvas.height - 20, canvas.width, 20);
     }
@@ -78,8 +77,8 @@ function minMaxNumber(min, max) {
     return value;
 }
 
-const pipe = new pipes(canvas.width + 300, minMaxNumber(180, 360), 100, 300);
-const pipe2 = new pipes(canvas.width + 300, pipe.y - 400, 100, 300);
+const pipe = new pipes(canvas.width + 300, minMaxNumber(180, 360), 50, 300);
+const pipe2 = new pipes(canvas.width + 300, pipe.y - 400, 50, 300);
 
 /****************************************************************************** function */
 
@@ -88,7 +87,6 @@ function drawStatiqueImage() {
     requestAnimationFrame(drawStatiqueImage);
     //background
     ctx.drawImage(image, 800, 0, 500, 1000, 0, 0, canvas.width, canvas.height);
-
 
     document.getElementById("score").innerText = score;
     localStorage.setItem("best_score", best_score);
@@ -107,8 +105,8 @@ function drawStatiqueImage() {
         }
 
 
-        pipe.x = canvas.width;
-        pipe2.x = canvas.width;
+        pipe.x = canvas.width + 100;
+        pipe2.x = canvas.width + 100;
 
         pipe.y = minMaxNumber(180, 360);
         pipe2.y = pipe.y - 400;
@@ -123,7 +121,7 @@ function colision() {
         flappyBird.method();
         pipe.method();
         pipe2.method();
-        
+
 
     } else {
         messageBox.classList.remove("cacheText");
@@ -143,12 +141,12 @@ bouton_start.addEventListener("click", () => {
     pipe2.x = canvas.width + 300;
     start = true;
     pushLeft = 2;
-    setInterval(()=>{
+    setInterval(() => {
         pushLeft += 0.1;
-    },20000)
+    }, 20000)
     colision();
     messageBox.classList.toggle("cacheText");
-    
+
 })
 
 canvas.addEventListener("click", () => {
@@ -158,10 +156,10 @@ canvas.addEventListener("click", () => {
         } else {
             let audio = document.createElement("audio");
             document.querySelector("figure").appendChild(audio);
-            if(sound == true){
+            if (sound == true) {
                 audio.innerHTML = "<audio controls autoplay src = 'sound.mp3'>";
             }
-            
+
             flappyBird.y -= flappyBird.pushUp;
             setInterval(() => {
                 if (flappyBird.frame == 265) {
@@ -172,7 +170,7 @@ canvas.addEventListener("click", () => {
 
             }, 500);
 
-            
+
         }
 
     }
@@ -186,19 +184,19 @@ const circle = document.getElementById("circle");
 
 let i = 0;
 
-container.addEventListener("click", ()=>{
-      i++;
-      
-      if(i == 1){
-        circle.style.animation ="anime 1s forwards";
+container.addEventListener("click", () => {
+    i++;
+
+    if (i == 1) {
+        circle.style.animation = "anime 1s forwards";
         circle.innerText = "on";
         sound = true;
-      }else if(i == 2){
-        circle.style.animation ="anime2 1s forwards";
+    } else if (i == 2) {
+        circle.style.animation = "anime2 1s forwards";
         circle.innerText = "off";
         i = 0;
         sound = false;
-      }
-      
-      
+    }
+
+
 })
