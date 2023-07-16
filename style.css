@@ -14,6 +14,9 @@ body {
     justify-content: center;
     align-items: center;
     background-color: darkblue;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body canvas {
