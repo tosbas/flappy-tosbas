@@ -173,6 +173,7 @@ gameLoop();
 
 bouton_start.addEventListener("click", () => {
     pipe.pushLeft = 5;
+    flappyBird.vy = 0;
     flappyBird.y = canvas.height / 2;
     pipe.pipe1X = canvas.width + 300;
     pipe.pipe2X = canvas.width + 300;
