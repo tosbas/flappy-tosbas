@@ -1,120 +1,132 @@
 * {
-    margin: 0;
-    padding: 0;
-    font-family: 'Courier New', Courier, monospace;
+  margin: 0;
+  padding: 0;
+  font-family: 'Courier New', Courier, monospace;
 }
 
 html {
-    height: 100%;
+  height: 100%;
 }
 
 body {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: darkblue;
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: darkblue;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body canvas {
-    overflow: hidden;
-    color: white;
-    display: block;
-    margin: auto;
-    border: 5px solid rgb(255, 0, 0)
+  overflow: hidden;
+  color: white;
+  display: block;
+  margin: auto;
+  border: 5px solid rgb(255, 0, 0);
+  border-radius: 30px;
+  cursor: pointer;
 }
 
 .information {
-    margin-bottom: 20px;
-    padding: 5px;
-    text-align: center;
-    color: white;
+  margin-bottom: 20px;
+  padding: 5px;
+  text-align: center;
+  color: white;
 }
 
 .cacheText {
-    visibility: hidden;
+  visibility: hidden;
 }
 
 figure {
-    display: none;
+  display: none;
 }
 
 #bouton_start {
-    margin-top: 10px;
-    padding: 5px;
-    background-color: orange;
-    border: 2px solid black;
-    cursor: pointer;
-    font-size: 20px;
-    font-weight: bold;
+  margin-top: 10px;
+  padding: 5px;
+  background-color: orange;
+  border: 2px solid black;
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: bold;
 }
 
 #messageBox {
-    position: absolute;
-    border: 5px solid black;
-    font-size: 24px;
-    padding: 5px;
-    background-color: white;
-    width: 250px;
-    display: flex;
-    text-align: center;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    font-weight: bold;
-    color: black;
+  position: absolute;
+  border: 5px solid black;
+  font-size: 24px;
+  padding: 5px;
+  background-color: white;
+  width: 250px;
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  color: black;
 }
 
-#container{
-    border:3px solid black;
-    width:100px;
-    height:30px;
-    border-radius:30px;
-    background: rgb(168,168,168);
-    background: radial-gradient(circle, rgba(168,168,168,1) 17%,       rgba(93,93,93,1) 85%); 
-    padding:10px;
-    margin: auto;
-  }
-  
-  #contour{
-    background-color:black;
-    width: 100px;
-    height: 30px;
-    border-radius: 20px;
-  }
-  
-  #circle{
-    background: red;
-    width:30px;
-    height:30px;
-    border-radius:20px;
-    display: flex;
-    align-items:center;
-    justify-content:center;
-    cursor:pointer;
+#container {
+  border: 3px solid black;
+  width: 100px;
+  height: 30px;
+  border-radius: 30px;
+  background: rgb(168, 168, 168);
+  background: radial-gradient(circle, rgba(168, 168, 168, 1) 17%, rgba(93, 93, 93, 1) 85%);
+  padding: 10px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+
+}
+
+#contour {
+  background-color: black;
+  width: 100px;
+  height: 30px;
+  border-radius: 20px;
+  border: 1px solid rgb(70, 70, 70);
+  display: flex;
+  align-items: center;
+}
+
+#circle {
+  background: red;
+  width: 30px;
+  height: 30px;
+  border: 2px solid #ffffff;
+  /* padding: 2px; */
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+@keyframes anime {
+  from {
+    background-color: red;
   }
 
-  @keyframes anime{
-    from{
-      background-color: red;
-    }
-    to{
-      transform: translate(70px);
-      background-color: yellowgreen;
-    }
+  to {
+    transform: translate(66px);
+    background-color: rgb(0, 255, 13);
   }
-  
-  
-  @keyframes anime2{
-    from{
-      transform: translate(70px);
-      background-color: yellowgreen;
-    }
-    to{
-      transform: translate(0px);
-      background-color: red;
-    }
+}
+
+
+@keyframes anime2 {
+  from {
+    transform: translate(60px);
+    background-color: yellowgreen;
   }
+
+  to {
+    transform: translate(0px);
+    background-color: red;
+  }
+}
