@@ -10,21 +10,14 @@ const best_scoreView = document.getElementById("best_score");
 
 
 canvas.height = 600;
+canvas.width = 800;
 
-if (window.innerWidth > 800) {
-    canvas.width = 800;
-} else {
-    canvas.width = window.innerWidth;
-}
+//Pipes conf
+const PIPES_PUSH_LEFT = 5;
 
-window.addEventListener("resize", () => {
-
-    if (window.innerWidth > 800) {
-        canvas.width = 800;
-    } else {
-        canvas.width = window.innerWidth;
-    }
-})
+//Flappy conf
+const FLAPPY_PUSH_UP = 4;
+const FLAPPY_PUSH_DOWN = 0.1;
 
 
 const image = new Image();
@@ -68,9 +61,8 @@ class bird {
         this.vy = 0;
         this.width = width;
         this.height = height;
-        this.pushDown = 0.1;
-        this.pushLeft = 0.5;
-        this.pushUp = 4;
+        this.pushDown = FLAPPY_PUSH_DOWN;
+        this.pushUp = FLAPPY_PUSH_UP;
         this.frame = 265;
     }
     draw() {
@@ -79,8 +71,6 @@ class bird {
     method() {
         this.vy += this.pushDown;
 
-
-        //Tape le plafond !!
         if (this.y <= 0) {
             this.vy = 0;
             this.vy += this.pushUp;
@@ -125,7 +115,7 @@ class areaGame {
         this.y = y;
         this.width = width;
         this.height = height;
-        this.pushLeft = 5;
+        this.pushLeft = PIPES_PUSH_LEFT;
         this.pipe1X = this.x;
         this.pipe1Y = this.y;
         this.pipe1W = this.width;
@@ -258,7 +248,7 @@ container.addEventListener("click", () => {
 })
 
 bouton_start.addEventListener("click", () => {
-    area.pushLeft = 5;
+    area.pushLeft = PIPES_PUSH_LEFT;
     flappyBird.vy = 0;
     flappyBird.y = canvas.height / 2;
     area.pipe1X = canvas.width + 300;
